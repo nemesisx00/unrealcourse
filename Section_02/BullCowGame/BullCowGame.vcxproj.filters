@@ -32,5 +32,8 @@
     <ClInclude Include="BullCowGame.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EvaluationResponse.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

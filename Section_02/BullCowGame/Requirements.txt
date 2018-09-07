@@ -26,7 +26,7 @@ Any performance limits worth mentioning?
 		- The only performance limit I can think of is the string parsing but that isn't really worth mentioning unless we set n to be something ridiculous like 5000...
 
 What assets (art, sound, story text) do we need?
-	- Need to design some neat ASCII art to print along with the game's title.
+	- Need to design some neat ASCII art to prsize_t along with the game's title.
 	- A collection of one or more isograms for the user to guess/deduce.
 	- Input prompt text
 	- Success or failure text

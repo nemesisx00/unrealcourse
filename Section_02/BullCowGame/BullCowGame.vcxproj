@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BullCowGame.hh" />
+    <ClInclude Include="EvaluationResponse.hh" />
     <ClInclude Include="main.hh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
