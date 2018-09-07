@@ -1,0 +1,39 @@
+BullCowGame Requirements
+
+What will the inputs be?
+	- The input will be a string of n length
+		- It seems n is likely to be 5 in this particular case
+		- The string should only contain letters
+		- If the string contains something other than letters, notify the user of their mistake
+
+What will the outputs be?
+	- In general terms, the output will also be strings.
+		- The strings will be written to the output stream resulting in their being displayed in the user's console.
+		- At a minimum the output should contain:
+			- The number of "Bulls," or the number of letters which are in the correct location.
+			- The number of "Cows," or the number of letters which are in the isogram but not in the correct location.
+			- A new input prompt for the user.
+		- The initial output will announce the title of the game, with some fancy ASCII art, followed by the input prompt.
+			- This should be reusable when the player restarts the game
+
+What tasks will the user be asked to do?
+	- The user will be asked to guess the isogram, up to x number of times.
+	- Upon failing, the user will be asked if they want to play again with the same isogram.
+	- Upon failing or succeeding, the user will be asked if they want to play again with a different isogram.
+
+Any performance limits worth mentioning?
+	- No.
+		- The only performance limit I can think of is the string parsing but that isn't really worth mentioning unless we set n to be something ridiculous like 5000...
+
+What assets (art, sound, story text) do we need?
+	- Need to design some neat ASCII art to print along with the game's title.
+	- A collection of one or more isograms for the user to guess/deduce.
+	- Input prompt text
+	- Success or failure text
+
+-----
+
+Review based on the rest of the video:
+
+	Okay, so basically I was too ...word-y? concept-y? What he was really looking for was describing concrete functionality that would need to be implemented.
+	Also, I completely forgot about the "NO list" so a lot of the ideas I had was stuff that he put on the list of things to not be done on this first pass.
