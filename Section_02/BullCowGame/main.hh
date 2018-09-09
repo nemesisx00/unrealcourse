@@ -5,40 +5,52 @@
 #include <string>
 #include "BullCowGame.hh"
 
-std::string getGuess(BullCowGame game)
-{
-	std::cout << "\nAttempt " << game.GetCurrentAttempt() << " > ";
-	std::string guess = "";
-	std::getline(std::cin, guess);
-
-	return guess;
-}
-
 void printBullsAndCows(EvaluationResponse resp)
 {
-	std::cout << "\nBulls: " << resp.bulls << " - Cows: " << resp.cows << std::endl;
+	std::cout << "Bulls: " << resp.bulls << " - Cows: " << resp.cows << std::endl;
 }
 
-void printGuess(std::string guess)
+void printGuessStatus(GuessStatus status, size_t isogramLength)
 {
-	std::cout << "You guessed: " << guess << std::endl;
-}
-
-void printGuessStatus(GuessStatus status)
-{
-	std::cout << "\nGuess invalid";
+	std::cout << "Guess invalid";
 	switch(status)
 	{
-		case GuessStatus::NotLongEnough:
-			std::cout << " - Guess is not long enough!\n";
+		case GuessStatus::LengthMismatch:
+			std::cout << " - Guess length is not " << isogramLength << "!\n";
+			break;
+		case GuessStatus::NotAllLetters:
+			std::cout << " - Guess is not only letters!\n";
 			break;
 		case GuessStatus::NotIsogram:
 			std::cout << " - Guess is not an isogram!\n";
+			break;
+		case GuessStatus::NotLowerCase:
+			std::cout << " - Guess is not all lowercase!\n";
 			break;
 		default:
 			std::cout << "!\n";
 			break;
 	}
+}
+
+void printIntroduction(BullCowGame game, bool playingAgain)
+{
+	std::ostringstream os;
+	if(playingAgain)
+		os << std::endl;
+
+	os << "Welcome to Bulls and Cows, a fun word game.\n\n"
+		<< "          }   {       ___ \n"
+		<< "          (o o)      (o o)\n"
+		<< "   /-------\\ /        \\ /-------\\ \n"
+		<< "  / | BULL |O          O| COW  | \\ \n"
+		<< " *  |-,--- |            |------|  * \n"
+		<< "    ^      ^            ^       ^ \n"
+		<< "\nCan you guess which "
+		<< game.GetIsogramLength()
+		<< " letter isogram I've got in mind?\n";
+
+	std::cout << os.str();
 }
 
 void printLostGame()
@@ -60,29 +72,38 @@ bool shouldPlayAgain()
 	return again[0] == 'y' || again[0] == 'Y';
 }
 
+std::string getGuess(BullCowGame game)
+{
+	std::string guess = "";
+	GuessStatus status = GuessStatus::Invalid;
+	do
+	{
+		std::cout << "\nAttempt " << game.GetCurrentAttempt() << "/" << game.GetMaxAttempts() << " > ";
+		std::getline(std::cin, guess);
+
+		status = game.ValidateGuess(guess);
+		if(status != GuessStatus::Ok)
+			printGuessStatus(status, game.GetIsogramLength());
+	} while(status != GuessStatus::Ok);
+
+	return guess;
+}
+
 void playGame(BullCowGame game)
 {
 	game.Reset();
 
-	std::string guess = "";
-	do
+	while(game.GetCurrentAttempt() <= game.GetMaxAttempts())
 	{
-		guess = getGuess(game);
-		GuessStatus wordStatus = game.ValidateGuess(guess);
-		if(wordStatus == GuessStatus::Ok)
-		{
-			printBullsAndCows(game.EvaluateGuess(guess));
-			printGuess(guess);
+		std::string guess = getGuess(game);
+		printBullsAndCows(game.EvaluateGuess(guess));
 
-			if(game.IsGameWon())
-			{
-				printWonGame();
-				break;
-			}
+		if(game.IsGameWon())
+		{
+			printWonGame();
+			break;
 		}
-		else
-			printGuessStatus(wordStatus);
-	} while(game.GetCurrentAttempt() < game.GetMaxAttempts());
+	}
 
 	if(!game.IsGameWon())
 		printLostGame();

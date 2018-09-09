@@ -1,8 +1,5 @@
 #include "BullCowGame.hh"
 
-const std::string BullCowGame::Introduction1 = "Welcome to Bulls and Cows, a fun word game.\nCan you guess which ";
-const std::string BullCowGame::Introduction2 = " letter isogram I've got in mind?\n";
-
 BullCowGame::BullCowGame(size_t maxAttempts)
 {
 	this->maxAttempts = maxAttempts;
@@ -18,28 +15,26 @@ bool BullCowGame::IsGameWon() const { return won; }
 EvaluationResponse BullCowGame::EvaluateGuess(std::string guess)
 {
 	EvaluationResponse resp;
-	if(currentAttempt < maxAttempts)
+	if(currentAttempt <= maxAttempts)
 	{
 		currentAttempt++;
 		FindBullsAndCows(guess, resp);
 	}
 
-	if(resp.bulls == isogram.length())
-		won = true;
-
+	won = resp.bulls == isogram.length();
 	return resp;
 }
 
 // Detect the number of Bulls and Cows within the guess.
 void BullCowGame::FindBullsAndCows(std::string guess, EvaluationResponse &resp)
 {
-	for(size_t i = 0; i < isogram.length(); i++)
+	for(auto letter1 : isogram)
 	{
-		for(size_t j = 0; j < guess.length(); j++)
+		for(auto letter2 : guess)
 		{
-			if(isogram[i] == guess[j])
+			if(letter1 == letter2)
 			{
-				if(i == j)
+				if(isogram.find(letter1) == guess.find(letter2))
 					resp.bulls++;
 				else
 					resp.cows++;
@@ -48,48 +43,56 @@ void BullCowGame::FindBullsAndCows(std::string guess, EvaluationResponse &resp)
 	}
 }
 
-std::string BullCowGame::GetIntroduction() const
+bool BullCowGame::IsAllLetters(std::string guess) const
 {
-	std::ostringstream os;
-	os << BullCowGame::Introduction1
-		<< GetIsogramLength()
-		<< BullCowGame::Introduction2;
-
-	return os.str();
+	for(auto letter : guess)
+	{
+		if(!isalpha(letter))
+			return false;
+	}
+	return true;
 }
 
 bool BullCowGame::IsIsogram(std::string guess) const
 {
-	bool out = true;
-	for(size_t i = 1; i < guess.length(); i++)
+	std::map<char, bool> tally;
+	for(auto letter : guess)
 	{
-		out = guess[i] != guess[i - 1];
-		if(!out)
-			break;
+		letter = tolower(letter);
+		if(tally[letter])
+			return false;
+		tally[letter] = true;
 	}
-	return out;
+	return true;
 }
 
 bool BullCowGame::IsLowerCase(std::string guess) const
 {
-	//TODO: Implement this validation
+	for(auto letter : guess)
+	{
+		if(!islower(letter))
+			return false;
+	}
 	return true;
 }
 
 void BullCowGame::Reset()
 {
-	currentAttempt = 0;
+	currentAttempt = 1;
 	won = false;
 	isogram = "filer";
 }
 
 GuessStatus BullCowGame::ValidateGuess(std::string guess) const
 {
+	if(guess.length() != isogram.length())
+		return GuessStatus::LengthMismatch;
+
+	if(!IsAllLetters(guess))
+		return GuessStatus::NotAllLetters;
+
 	if(!IsLowerCase(guess))
 		return GuessStatus::NotLowerCase;
-
-	if(guess.length() != isogram.length())
-		return GuessStatus::NotLongEnough;
 
 	if(!IsIsogram(guess))
 		return GuessStatus::NotIsogram;

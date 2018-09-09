@@ -4,12 +4,14 @@ int main()
 {
 	constexpr size_t MaxAttempts = 6;
 	BullCowGame game(MaxAttempts);
+	bool playingAgain = false;
 
 	do
 	{
-		std::cout << game.GetIntroduction();
+		printIntroduction(game, playingAgain);
 		playGame(game);
-	} while(shouldPlayAgain());
+		playingAgain = shouldPlayAgain();
+	} while(playingAgain);
 
 	return 0;
 }

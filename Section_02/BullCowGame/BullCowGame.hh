@@ -2,15 +2,18 @@
 #define BULLCOWGAME_HH
 
 #include <iostream>
+#include <map>
 #include <sstream>
 #include <string>
 #include "EvaluationResponse.hh"
 
 enum class GuessStatus
 {
+	Invalid,
 	Ok,
+	LengthMismatch,
+	NotAllLetters,
 	NotIsogram,
-	NotLongEnough,
 	NotLowerCase
 };
 
@@ -22,7 +25,6 @@ public:
 	size_t GetCurrentAttempt() const;
 	size_t GetIsogramLength() const;
 	size_t GetMaxAttempts() const;
-	std::string GetIntroduction() const;
 
 	bool IsGameWon() const;
 	GuessStatus ValidateGuess(std::string) const;
@@ -31,15 +33,13 @@ public:
 	EvaluationResponse EvaluateGuess(std::string);
 
 private:
-	const static std::string Introduction1;
-	const static std::string Introduction2;
-
 	bool won;
 	size_t currentAttempt;
 	size_t maxAttempts;
 	size_t wordLength;
 	std::string isogram;
 
+	bool IsAllLetters(std::string) const;
 	bool IsIsogram(std::string) const;
 	bool IsLowerCase(std::string) const;
 	void FindBullsAndCows(std::string, EvaluationResponse &);
