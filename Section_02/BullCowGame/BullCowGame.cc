@@ -1,9 +1,7 @@
 #include "BullCowGame.hh"
 
-BullCowGame::BullCowGame(size_t maxAttempts)
+BullCowGame::BullCowGame()
 {
-	this->maxAttempts = maxAttempts;
-	
 	Reset();
 }
 
@@ -11,6 +9,11 @@ size_t BullCowGame::GetCurrentAttempt() const { return currentAttempt; }
 size_t BullCowGame::GetIsogramLength() const { return isogram.length(); }
 size_t BullCowGame::GetMaxAttempts() const { return maxAttempts; }
 bool BullCowGame::IsGameWon() const { return won; }
+
+void BullCowGame::SetIsogramLength(WordLength length)
+{
+	wordLength = length;
+}
 
 EvaluationResponse BullCowGame::EvaluateGuess(std::string guess)
 {
@@ -80,7 +83,21 @@ void BullCowGame::Reset()
 {
 	currentAttempt = 1;
 	won = false;
-	isogram = "filer";
+	isogram = selector.SelectWord(wordLength);
+
+	switch(wordLength)
+	{
+		case WordLength::Five:
+			maxAttempts = 8;
+			break;
+		case WordLength::Six:
+			maxAttempts = 12;
+			break;
+		case WordLength::Four:
+		default:
+			maxAttempts = 5;
+			break;
+	}
 }
 
 GuessStatus BullCowGame::ValidateGuess(std::string guess) const

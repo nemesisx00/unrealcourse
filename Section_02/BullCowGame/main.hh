@@ -45,12 +45,16 @@ void printIntroduction(BullCowGame game, bool playingAgain)
 		<< "   /-------\\ /        \\ /-------\\ \n"
 		<< "  / | BULL |O          O| COW  | \\ \n"
 		<< " *  |-,--- |            |------|  * \n"
-		<< "    ^      ^            ^       ^ \n"
-		<< "\nCan you guess which "
-		<< game.GetIsogramLength()
-		<< " letter isogram I've got in mind?\n";
+		<< "    ^      ^            ^       ^ \n";
 
 	std::cout << os.str();
+}
+
+void printGameStart(BullCowGame game)
+{
+	std::cout << "\nCan you guess which "
+		<< game.GetIsogramLength()
+		<< " letter isogram I've got in mind?\n";
 }
 
 void printLostGame()
@@ -70,6 +74,33 @@ bool shouldPlayAgain()
 	std::getline(std::cin, again);
 
 	return again[0] == 'y' || again[0] == 'Y';
+}
+
+WordLength getWordLength()
+{
+	std::cout << "\nSelect the difficulty:\n\n"
+		<< "\t4 - Four letters\n"
+		<< "\t5 - Five letters\n"
+		<< "\t6 - Six letters\n\n> ";
+	
+	std::string choice = "";
+	std::getline(std::cin, choice);
+
+
+	switch(choice[0])
+	{
+		case '4':
+			return WordLength::Four;
+		case '5':
+			return WordLength::Five;
+		case '6':
+			return WordLength::Six;
+		default:
+			break;
+	}
+
+	std::cout << "Invalid difficulty choice! Please choose again.\n";
+	return getWordLength();
 }
 
 std::string getGuess(BullCowGame game)
@@ -92,6 +123,7 @@ std::string getGuess(BullCowGame game)
 void playGame(BullCowGame game)
 {
 	game.Reset();
+	printGameStart(game);
 
 	while(game.GetCurrentAttempt() <= game.GetMaxAttempts())
 	{

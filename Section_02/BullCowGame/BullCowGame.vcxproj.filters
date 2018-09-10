@@ -21,6 +21,9 @@
     <ClCompile Include="BullCowGame.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WordSelector.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Requirements.txt" />
@@ -33,6 +36,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EvaluationResponse.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WordSelector.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

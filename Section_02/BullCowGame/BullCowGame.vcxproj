@@ -127,6 +127,7 @@
   <ItemGroup>
     <ClCompile Include="BullCowGame.cc" />
     <ClCompile Include="main.cc" />
+    <ClCompile Include="WordSelector.cc" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Requirements.txt" />
@@ -135,6 +136,7 @@
     <ClInclude Include="BullCowGame.hh" />
     <ClInclude Include="EvaluationResponse.hh" />
     <ClInclude Include="main.hh" />
+    <ClInclude Include="WordSelector.hh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

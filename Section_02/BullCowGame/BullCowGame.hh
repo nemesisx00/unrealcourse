@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include "EvaluationResponse.hh"
+#include "WordSelector.hh"
 
 enum class GuessStatus
 {
@@ -20,11 +21,13 @@ enum class GuessStatus
 class BullCowGame
 {
 public:
-	BullCowGame(size_t);
+	BullCowGame();
 
 	size_t GetCurrentAttempt() const;
 	size_t GetIsogramLength() const;
 	size_t GetMaxAttempts() const;
+
+	void SetIsogramLength(WordLength);
 
 	bool IsGameWon() const;
 	GuessStatus ValidateGuess(std::string) const;
@@ -36,8 +39,9 @@ private:
 	bool won;
 	size_t currentAttempt;
 	size_t maxAttempts;
-	size_t wordLength;
 	std::string isogram;
+	WordLength wordLength;
+	WordSelector selector;
 
 	bool IsAllLetters(std::string) const;
 	bool IsIsogram(std::string) const;
@@ -45,4 +49,4 @@ private:
 	void FindBullsAndCows(std::string, EvaluationResponse &);
 };
 
-#endif // !BULLCOWGAME_HH
+#endif //!BULLCOWGAME_HH
