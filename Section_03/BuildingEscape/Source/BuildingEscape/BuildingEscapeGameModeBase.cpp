@@ -1,7 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// © Peter Lunneberg 2018
 
 #include "BuildingEscapeGameModeBase.h"
-
-
-
-
