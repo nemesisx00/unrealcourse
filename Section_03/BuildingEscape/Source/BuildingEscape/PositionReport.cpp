@@ -1,6 +1,7 @@
 // © 2019 Peter Lunneberg
 
 #include "PositionReport.h"
+#include "GameFramework/Actor.h"
 
 // Sets default values for this component's properties
 UPositionReport::UPositionReport()
@@ -17,8 +18,7 @@ void UPositionReport::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	UE_LOG(LogTemp, Warning, TEXT("%s is at %s"), *GetOwner()->GetName(), *GetOwner()->GetActorLocation().ToString());
 }
 
 // Called every frame
@@ -28,4 +28,3 @@ void UPositionReport::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 
 	// ...
 }
-
